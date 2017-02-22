@@ -9,7 +9,7 @@ import java.util.Properties;
  *
  * @author p.zhoidz.
  */
-public class Settings {
+public final class Settings {
     private static final String CONFIGURATION_FILE = "configuration.properties";
     private static final String MAX_EDIT_DISTANCE_PROPERTY_NAME = "max.edit.distance";
     private static final String MAX_EDIT_DISTANCE_DEFAULT = "1";

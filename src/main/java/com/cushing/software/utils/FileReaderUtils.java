@@ -11,7 +11,14 @@ import java.util.stream.Stream;
  *
  * @author p.zhoidz.
  */
-public class FileReaderUtils {
+public final class FileReaderUtils {
+
+    /**
+     * Utility class private constructor.
+     */
+    private FileReaderUtils() {
+
+    }
 
     /**
      * Read file as stream.
@@ -22,7 +29,7 @@ public class FileReaderUtils {
      * @throws IOException          standard I/O exception cases.
      */
     public static Stream<String> getStream(String fileName) throws IOException {
-        String input = FileReaderUtils.class.getClass()
+        String input = FileReaderUtils.class
                 .getClassLoader()
                 .getResource(fileName)
                 .getFile();

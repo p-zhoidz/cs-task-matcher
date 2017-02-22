@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toList;
 
 /**
+ * @param <T> type of the tested objects.
  * @author p.zhoidz.
  */
 public class Tester<T> {

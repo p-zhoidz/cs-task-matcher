@@ -14,5 +14,5 @@ public interface DistanceAlg {
      * @return true if distance is less or equal to {@code max} value, false otherwise.
      * @throws NullPointerException if s1 or s2 is null.
      */
-    boolean matches(final String s1, final String s2, int max);
+    boolean matches(String s1, String s2, int max);
 }

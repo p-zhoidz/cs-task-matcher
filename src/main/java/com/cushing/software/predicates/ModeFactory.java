@@ -2,22 +2,31 @@ package com.cushing.software.predicates;
 
 import com.cushing.software.settings.Settings;
 
-import java.io.IOException;
 import java.util.Set;
 import java.util.function.Predicate;
 
 /**
  * @author p.zhoidz.
  */
-public class PredicateFactory {
+public final class ModeFactory {
 
-    private static final Settings settings = Settings.SettingsHolder.HOLDER_INSTANCE;
+    private static final Settings SETTINGS = Settings.SettingsHolder.HOLDER_INSTANCE;
 
+    /**
+     * Possible predicate modes.
+     */
     public enum Type {
         SIMPLE, CONTAINS, EDIT_DISTANCE
     }
 
-    public static Predicate<String> getPredicate(Type type, Set<String> patterns) throws IOException {
+    /**
+     * Get predicate based on mode.
+     *
+     * @param type     of the predicate.
+     * @param patterns Set of patterns to compare.
+     * @return predicate instance.
+     */
+    public Predicate<String> getPredicate(Type type, Set<String> patterns) {
         switch (type) {
             case SIMPLE:
                 return StringPredicates.equalsPredicate(patterns);
@@ -26,10 +35,9 @@ public class PredicateFactory {
                 return StringPredicates.containsPredicate(patterns);
 
             case EDIT_DISTANCE:
-                return StringPredicates.distanceAwareDamerauPredicate(patterns, settings.getMaxEditDistance());
+                return StringPredicates.distanceAwareLevenshteinPredicate(patterns, SETTINGS.getMaxEditDistance());
 
             default:
-                //FIXME
                 throw new IllegalArgumentException();
         }
     }

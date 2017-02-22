@@ -3,14 +3,24 @@ package com.cushing.software.predicates;
 import com.cushing.software.algo.DamerauDelegate;
 import com.cushing.software.algo.DamerauImproved;
 import com.cushing.software.algo.DistanceAlg;
+import com.cushing.software.algo.LevenshteinBounded;
 
 import java.util.Set;
 import java.util.function.Predicate;
 
 /**
+ * Predicates factory.
+ *
  * @author p.zhoidz.
  */
-public class StringPredicates {
+public final class StringPredicates {
+
+    /**
+     * Private constructor.
+     */
+    private StringPredicates() {
+
+    }
 
     /**
      * Simple string equals predicate.
@@ -45,7 +55,8 @@ public class StringPredicates {
     /**
      * Distance aware predicate. Please, refer {@code DamerauDelegate} for details.
      *
-     * @param patterns strings to compare.
+     * @param patterns    strings to compare.
+     * @param maxDistance maximum edit distance.
      * @return true if string matches at least one pattern.
      */
     public static Predicate<String> distanceAwareDamerauPredicate(Set<String> patterns, int maxDistance) {
@@ -56,11 +67,26 @@ public class StringPredicates {
     /**
      * Improved distance aware predicate. Please, refer {@code DamerauImproved} for details.
      *
-     * @param patterns strings to compare.
+     * @param patterns    strings to compare.
+     * @param maxDistance maximum edit distance.
      * @return true if string matches at least one pattern.
      */
     public static Predicate<String> distanceAwareDamerauImprovedPredicate(Set<String> patterns, int maxDistance) {
         DistanceAlg alg = new DamerauImproved();
+        return getDistAwarePredicate(alg, patterns, maxDistance);
+    }
+
+    /**
+     * Improved distance aware predicate.
+     * Please, refer {@code StringUtils.getLevenshteinDistance(CharSequence s, CharSequence t, final int threshold)}
+     * for details.
+     *
+     * @param patterns    strings to compare.
+     * @param maxDistance maximum edit distance.
+     * @return true if string matches at least one pattern.
+     */
+    public static Predicate<String> distanceAwareLevenshteinPredicate(Set<String> patterns, int maxDistance) {
+        DistanceAlg alg = new LevenshteinBounded();
         return getDistAwarePredicate(alg, patterns, maxDistance);
     }
 
