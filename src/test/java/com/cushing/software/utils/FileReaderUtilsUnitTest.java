@@ -17,14 +17,14 @@ public class FileReaderUtilsUnitTest {
     public void testFileRead() throws Exception {
         List<String> expected = Stream.of("sample line 1", "sample line 2").collect(toList());
 
-        Stream<String> stream = FileReaderUtils.getStream("input.txt");
-        List<String> result = stream.collect(toList());
+        String path = this.getClass()
+                .getClassLoader()
+                .getResource("input.txt")
+                .getPath();
+
+        List<String> result = FileReaderUtils.getContent(path);
 
         assertTrue(result.containsAll(expected));
     }
 
-    @Test(expected = NullPointerException.class)
-    public void testFileDoesNotExistThrowsNPException() throws Exception {
-        FileReaderUtils.getStream("nonexisting.txt");
-    }
 }

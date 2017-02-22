@@ -1,6 +1,5 @@
-package com.cushing.software;
+package com.cushing.software.predicates;
 
-import com.cushing.software.predicates.StringPredicates;
 import org.junit.Test;
 
 import java.util.List;
@@ -10,14 +9,12 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * @author p.zhoidz.
  */
-public class TesterUnitTest {
+public class StringPredicatesUnitTest {
 
     @Test
     public void testEqualsPredicate() throws Exception {
@@ -36,9 +33,8 @@ public class TesterUnitTest {
                 "and this is anoother");
 
         Predicate<String> sut = StringPredicates.equalsPredicate(patterns);
+        List<String> result = input.filter(sut).collect(toList());
 
-        Tester<String> tester = new Tester<>();
-        List<String> result = tester.test(sut, input);
         assertNotNull(result);
         assertEquals(1, result.size());
         assertTrue(result.containsAll(expected));
@@ -61,9 +57,8 @@ public class TesterUnitTest {
                 "and this is anoother");
 
         Predicate<String> sut = StringPredicates.containsPredicate(patterns);
+        List<String> result = input.filter(sut).collect(toList());
 
-        Tester<String> tester = new Tester<>();
-        List<String> result = tester.test(sut, input);
         assertNotNull(result);
         assertEquals(2, result.size());
         assertTrue(result.containsAll(expected));
@@ -86,38 +81,14 @@ public class TesterUnitTest {
                 "and this is anoother");
 
         Predicate<String> sut = StringPredicates.distanceAwareDamerauPredicate(patterns, 2);
+        List<String> result = input.filter(sut).collect(toList());
 
-        Tester<String> tester = new Tester<>();
-        List<String> result = tester.test(sut, input);
         assertNotNull(result);
         assertEquals(3, result.size());
         assertTrue(result.containsAll(expected));
     }
 
-    @Test
-    public void testDistanceAwareDamerauImprovedPredicate() throws Exception {
-        List<String> expected = Stream.of("the end", "and this is another.")
-                .collect(toList());
 
-        Set<String> patterns = Stream.of("the end",
-                "matches",
-                "line 3",
-                "and this is anoother.").collect(toSet());
-
-        Stream<String> input = Stream.of("Hello. This is line 1 of text.",
-                "and this is another.",
-                "line 3 here",
-                "the end",
-                "and this is anoother");
-
-        Predicate<String> sut = StringPredicates.distanceAwareDamerauImprovedPredicate(patterns, 2);
-
-        Tester<String> tester = new Tester<>();
-        List<String> result = tester.test(sut, input);
-        assertNotNull(result);
-        assertEquals(3, result.size());
-        assertTrue(result.containsAll(expected));
-    }
 
     @Test
     public void testLevenshteinPredicate() throws Exception {
@@ -136,9 +107,8 @@ public class TesterUnitTest {
                 "and this is anoother");
 
         Predicate<String> sut = StringPredicates.distanceAwareLevenshteinPredicate(patterns, 2);
+        List<String> result = input.filter(sut).collect(toList());
 
-        Tester<String> tester = new Tester<>();
-        List<String> result = tester.test(sut, input);
         assertNotNull(result);
         assertEquals(3, result.size());
         assertTrue(result.containsAll(expected));
